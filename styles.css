@@ -517,6 +517,7 @@ img {
     z-index: 2;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 3rem;
     max-width: 1100px;
     margin: 0 auto;
@@ -537,6 +538,7 @@ img {
 
 .bio-hero-content {
     flex: 1;
+    text-align: center;
 }
 
 .bio-hero-title {
@@ -1081,9 +1083,12 @@ img {
 }
 
 .footer-party-logo {
+    display: block;
     width: clamp(150px, 18vw, 230px);
     height: auto;
     margin: 0.35rem 0 0.65rem;
+    filter: brightness(1.12) contrast(1.18) saturate(1.08) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
+    opacity: 0.98;
 }
 
 .footer-title {
@@ -1194,6 +1199,11 @@ img {
 
     .footer-nav {
         align-items: center;
+    }
+
+    .footer-party-logo {
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .logo-img {
