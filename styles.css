@@ -36,6 +36,7 @@ body {
     color: var(--color-text);
     background: var(--color-bg);
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
 }
 
 a {
@@ -80,7 +81,6 @@ img {
     right: 0;
     z-index: 1000;
     background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(10px);
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
 }
 
@@ -99,7 +99,7 @@ img {
 }
 
 .logo-img {
-    height: 40px;
+    height: 48px;
     width: auto;
     display: block;
 }
@@ -208,20 +208,10 @@ img {
     }
 }
 
-/* Scroll-triggered animations - visible by default, animate slide on scroll */
+/* animate-on-scroll: no scroll animation, elements visible by default */
 .animate-on-scroll {
     opacity: 1;
-    transform: translateY(40px);
-    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.animate-on-scroll.animate-in {
-    transform: translateY(0);
-}
-
-/* Staggered delay for grid/list items */
-.animate-on-scroll[style*="--i"] {
-    transition-delay: calc(var(--i, 0) * 0.08s);
+    transform: none;
 }
 
 .hero-content {
@@ -333,19 +323,12 @@ img {
     position: relative;
     padding: 4rem 1.5rem;
     overflow-x: hidden;
+    overflow-y: visible;
 }
 
 /* Green diagonal band - accent inspired by ALMA logo */
 .section::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: -5%;
-    right: -5%;
-    height: 8px;
-    background: var(--color-accent-olive);
-    transform: rotate(-1.5deg);
-    transform-origin: center bottom;
+    display: none;
 }
 
 .container {
@@ -503,6 +486,277 @@ img {
 
 .bio-content p:last-child {
     margin-bottom: 0;
+}
+
+/* ===== Bio Page (biografiko.html) ===== */
+.bio-hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 50%, var(--color-primary-navy) 100%);
+    overflow: hidden;
+}
+
+.bio-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('assets/michalis-photo.png') center right / 55% auto no-repeat;
+    opacity: 0.15;
+    filter: grayscale(100%);
+}
+
+.bio-hero-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem 4rem;
+    width: 100%;
+}
+
+.bio-hero-photo {
+    flex: 0 0 320px;
+    aspect-ratio: 3 / 4;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+    background-image: url('assets/michalis-photo.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.bio-hero-content {
+    flex: 1;
+}
+
+.bio-hero-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+}
+
+.bio-hero-subtitle {
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+.bio-hero-logo-img {
+    height: 48px;
+    width: auto;
+    opacity: 0.95;
+}
+
+.bio-page-section {
+    background: var(--color-bg-alt);
+}
+
+.bio-page-section::after {
+    display: none;
+}
+
+.bio-page-content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.bio-intro {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: var(--color-text);
+    margin-bottom: 2.5rem;
+}
+
+.bio-section-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--color-accent-olive);
+}
+
+.bio-lead {
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.bio-milestones {
+    list-style: none;
+    margin-bottom: 2rem;
+}
+
+.bio-milestone {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    background: white;
+    border-radius: 8px;
+    border-left: 4px solid var(--color-accent-olive);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    transition: box-shadow var(--transition);
+}
+
+.bio-milestone:hover {
+    box-shadow: var(--shadow);
+}
+
+.bio-milestone-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-accent-olive);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.bio-milestone span:last-child {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text);
+}
+
+.bio-text {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--color-text);
+    margin-bottom: 2rem;
+}
+
+.bio-quote {
+    font-size: 1.25rem;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--color-primary);
+    padding: 2rem 2.5rem;
+    margin: 2.5rem 0;
+    background: white;
+    border-radius: 12px;
+    border-left: 5px solid var(--color-accent-olive);
+    box-shadow: var(--shadow);
+}
+
+.bio-quote::before {
+    content: '"';
+    font-size: 2.5rem;
+    color: var(--color-accent-olive);
+    opacity: 0.6;
+}
+
+.bio-cta {
+    text-align: center;
+    margin-top: 2.5rem;
+}
+
+/* Legal pages (Όροι Χρήσης, Πολιτική Απορρήτου) */
+.legal-page-section {
+    background: var(--color-bg-alt);
+    padding-top: 6rem;
+    padding-bottom: 4rem;
+}
+
+.legal-page-section::after {
+    display: none;
+}
+
+.legal-page-content {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.legal-page-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+
+.legal-updated {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2.5rem;
+}
+
+.legal-section-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--color-primary);
+    margin: 2rem 0 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--color-accent-olive);
+}
+
+.legal-page-content p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+}
+
+.legal-page-content a {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+.legal-page-content a:hover {
+    text-decoration: underline;
+}
+
+.legal-list {
+    margin: 0.5rem 0 1.5rem 1.25rem;
+    padding-left: 1.25rem;
+}
+
+.legal-list li {
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-text);
+}
+
+.legal-cta {
+    text-align: center;
+    margin-top: 2.5rem;
+}
+
+@media (max-width: 768px) {
+    .bio-hero-inner {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 5rem;
+    }
+    .bio-hero-photo {
+        flex: 0 0 auto;
+        width: 240px;
+    }
+    .bio-hero-title {
+        font-size: 1.85rem;
+    }
+    .bio-hero-subtitle {
+        font-size: 1rem;
+    }
 }
 
 /* ===== News Section - Video Carousel ===== */
@@ -708,6 +962,50 @@ img {
     text-align: center;
 }
 
+.contact-message {
+    max-width: 56rem;
+    margin: 0 auto 2.5rem;
+}
+
+.contact-message p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.contact-message p:last-child {
+    margin-bottom: 0;
+}
+
+.contact-ways-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.25rem;
+}
+
+.contact-ways-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem;
+}
+
+.contact-ways-list li {
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.contact-ways-list a {
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.contact-ways-list a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
 .contact-tagline {
     font-size: 1.25rem;
     font-weight: 600;
@@ -828,10 +1126,15 @@ img {
     height: 22px;
 }
 
+/* Hide LinkedIn icon across all pages */
+.social-icon-link[aria-label="LinkedIn"] {
+    display: none;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
     .logo-img {
-        height: 34px;
+        height: 40px;
     }
 
     .hero {

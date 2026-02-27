@@ -43,15 +43,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // Header scroll effect - add shadow on scroll
     const header = document.querySelector('.header');
     if (header) {
+        let ticking = false;
+        let isScrolled = false;
+
+        const updateHeaderShadow = () => {
+            const nextIsScrolled = window.scrollY > 50;
+            if (nextIsScrolled !== isScrolled) {
+                isScrolled = nextIsScrolled;
+                header.style.boxShadow = isScrolled
+                    ? '0 4px 25px rgba(0, 0, 0, 0.1)'
+                    : '0 2px 20px rgba(0, 0, 0, 0.06)';
+            }
+            ticking = false;
+        };
+
         const handleScroll = () => {
-            if (window.scrollY > 50) {
-                header.style.boxShadow = '0 4px 25px rgba(0, 0, 0, 0.1)';
-            } else {
-                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.06)';
+            if (!ticking) {
+                requestAnimationFrame(updateHeaderShadow);
+                ticking = true;
             }
         };
-        window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Initial check
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        updateHeaderShadow(); // Initial check
     }
 
     // Smooth scroll for anchor links (fallback for older browsers)
@@ -69,31 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
-    });
-
-    // Scroll-triggered animations - trigger immediately for elements in viewport
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px 0px -50px 0px',
-        threshold: 0.01
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-            }
-        });
-    }, observerOptions);
-
-    animatedElements.forEach(el => {
-        observer.observe(el);
-        // Show immediately if already in viewport
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 50) {
-            el.classList.add('animate-in');
-        }
     });
 
     // Video carousel
