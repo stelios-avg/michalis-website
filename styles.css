@@ -140,7 +140,7 @@ img {
 /* ===== Hero Section ===== */
 .hero {
     position: relative;
-    min-height: 90vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     background: #0a0a0a;
@@ -149,15 +149,6 @@ img {
 
 .hero-bg-accent {
     display: none;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    /* Overlay for readability over full-bleed photo */
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.58) 0%, rgba(0, 0, 0, 0.46) 45%, rgba(0, 0, 0, 0.32) 100%);
-    z-index: 1;
 }
 
 .hero-photo-wrap {
@@ -170,11 +161,19 @@ img {
     z-index: 0;
     background-image: url('assets/michalis-photo-v2.png');
     background-size: cover;
-    background-position: 28% top;
+    background-position: center center;
     background-repeat: no-repeat;
     animation: heroPhotoEntrance 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
     opacity: 0;
     transform: translateY(25px);
+}
+
+.hero-photo-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.28) 45%, rgba(0, 0, 0, 0.2) 100%);
+    z-index: 1;
 }
 
 .hero-inner {
@@ -187,7 +186,7 @@ img {
     margin: 0 auto;
     padding: 4rem 1.5rem;
     width: 100%;
-    min-height: 90vh;
+    min-height: 100vh;
 }
 
 @keyframes heroPhotoEntrance {
@@ -220,7 +219,7 @@ img {
 .hero-content {
     flex: 0 1 55%;
     max-width: 600px;
-    padding: 2rem 0;
+    padding: 3rem 0 2rem;
     text-align: left;
     margin-left: 0;
     margin-right: auto;
@@ -248,11 +247,16 @@ img {
     font-size: 1.15rem;
     color: rgba(255, 255, 255, 0.9);
     font-weight: 500;
-    margin-bottom: 2rem;
+    margin-bottom: 0.75rem;
 }
 
 .hero-logo-wrap {
-    margin-top: 2rem;
+    margin-top: 0;
+    background: white;
+    padding: 0 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
 }
 
 .hero-logo {
@@ -409,10 +413,10 @@ img {
 }
 
 .proposal-card {
-    padding: 2rem;
     background: white;
-    border-radius: 8px;
+    border-radius: 10px;
     border: 1px solid #e8e8e8;
+    overflow: hidden;
     transition: box-shadow var(--transition), border-color var(--transition);
 }
 
@@ -421,56 +425,85 @@ img {
     border-color: var(--color-primary);
 }
 
-.proposal-card h3 {
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--color-primary);
-    margin-bottom: 0.75rem;
-    line-height: 1.4;
+.proposal-card-image {
+    position: relative;
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--color-primary);
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem 1.25rem;
 }
 
-.proposal-card p {
+.proposal-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 35, 65, 0.9) 0%, rgba(0, 35, 65, 0.4) 50%, transparent 100%);
+    z-index: 1;
+}
+
+.proposal-card-title {
+    position: relative;
+    z-index: 2;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    line-height: 1.35;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+.proposal-card-body {
+    padding: 1.25rem 1.5rem;
+}
+
+.proposal-card-body p {
     font-size: 0.95rem;
     color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.55;
 }
 
 /* ===== Actions Section ===== */
 .actions-section {
-    background: var(--color-bg-alt);
+    background: var(--color-bg);
 }
 
 .actions-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
 }
 
 .action-item {
     display: flex;
-    align-items: center;
-    gap: 2rem;
-    padding: 1.25rem 1.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
     background: white;
-    border-radius: 8px;
-    border-left: 4px solid var(--color-primary);
-    transition: box-shadow var(--transition);
+    border-radius: 10px;
+    border: 1px solid #e8ecf0;
+    transition: box-shadow var(--transition), border-color var(--transition);
 }
 
 .action-item:hover {
     box-shadow: var(--shadow);
+    border-color: var(--color-primary);
 }
 
 .action-item time {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    color: var(--color-primary);
-    flex-shrink: 0;
+    letter-spacing: 0.05em;
+    color: var(--color-accent-olive);
 }
 
 .action-item h3 {
     font-size: 1rem;
     font-weight: 500;
+    line-height: 1.45;
     color: var(--color-text);
 }
 
@@ -500,16 +533,22 @@ img {
     min-height: 70vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 50%, var(--color-primary-navy) 100%);
     overflow: hidden;
 }
 
-.bio-hero-bg {
+.bio-hero-photo-wrap {
     position: absolute;
     inset: 0;
-    background: url('assets/michalis-photo-v2.png') center right / 55% auto no-repeat;
-    opacity: 0.15;
-    filter: grayscale(100%);
+    background-size: cover;
+    background-position: 70% 25%;
+    background-repeat: no-repeat;
+}
+
+.bio-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0, 35, 65, 0.75) 0%, rgba(0, 35, 65, 0.4) 45%, transparent 70%);
+    z-index: 1;
 }
 
 .bio-hero-inner {
@@ -517,8 +556,7 @@ img {
     z-index: 2;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 3rem;
+    justify-content: flex-start;
     max-width: 1100px;
     margin: 0 auto;
     padding: 6rem 1.5rem 4rem;
@@ -538,7 +576,7 @@ img {
 
 .bio-hero-content {
     flex: 1;
-    text-align: center;
+    text-align: left;
 }
 
 .bio-hero-title {
@@ -750,20 +788,21 @@ img {
 }
 
 @media (max-width: 768px) {
+    .bio-hero-photo-wrap {
+        background-position: 60% 25%;
+    }
+    .bio-hero-overlay {
+        background: linear-gradient(to right, rgba(0, 35, 65, 0.8) 0%, rgba(0, 35, 65, 0.5) 60%, transparent 100%);
+    }
     .bio-hero-inner {
-        flex-direction: column;
-        text-align: center;
+        justify-content: center;
         padding-top: 5rem;
     }
-    .bio-hero-photo {
-        flex: 0 0 auto;
-        width: 240px;
+    .bio-hero-content {
+        text-align: center;
     }
     .bio-hero-title {
         font-size: 1.85rem;
-    }
-    .bio-hero-subtitle {
-        font-size: 1rem;
     }
 }
 
@@ -916,21 +955,21 @@ img {
 
 /* ===== Contact Section ===== */
 .contact-section {
-    background: var(--color-primary);
-    color: white;
+    background: white;
+    color: var(--color-text);
 }
 
 .contact-section .section-title,
 .contact-section .page-title {
-    color: white;
+    color: var(--color-primary);
 }
 
 .contact-section .section-title::before {
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5) 30%, rgba(132,204,22,0.8) 50%, rgba(255,255,255,0.5) 70%, transparent);
+    background: linear-gradient(90deg, transparent, rgba(0,35,65,0.3) 30%, var(--color-primary) 50%, rgba(0,35,65,0.3) 70%, transparent);
 }
 
 .contact-section .section-title::after {
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.2) 80%, transparent);
+    background: linear-gradient(90deg, transparent, rgba(0,35,65,0.15) 20%, rgba(0,35,65,0.3) 50%, rgba(0,35,65,0.15) 80%, transparent);
 }
 
 .contact-page {
@@ -959,7 +998,7 @@ img {
     transform: translateX(-50%);
     width: 80px;
     height: 3px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5) 30%, rgba(132,204,22,0.8) 50%, rgba(255,255,255,0.5) 70%, transparent);
+    background: linear-gradient(90deg, transparent, rgba(0,35,65,0.3) 30%, var(--color-primary) 50%, rgba(0,35,65,0.3) 70%, transparent);
     border-radius: 2px;
 }
 
@@ -971,7 +1010,7 @@ img {
     transform: translateX(-50%);
     width: 120px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.2) 80%, transparent);
+    background: linear-gradient(90deg, transparent, rgba(0,35,65,0.15) 20%, rgba(0,35,65,0.3) 50%, rgba(0,35,65,0.15) 80%, transparent);
 }
 
 .contact-content {
@@ -1018,7 +1057,7 @@ img {
 }
 
 .contact-ways-list a:hover {
-    color: white;
+    color: var(--color-primary);
     text-decoration: underline;
 }
 
@@ -1037,9 +1076,9 @@ img {
     margin-bottom: 1.5rem;
 }
 
-.social-links a,
-.social-icon-link {
-    color: white;
+.contact-section .social-links a,
+.contact-section .social-icon-link {
+    color: var(--color-primary);
     font-weight: 500;
     display: inline-flex;
     align-items: center;
@@ -1047,9 +1086,9 @@ img {
     transition: color var(--transition), transform var(--transition);
 }
 
-.social-links a:hover,
-.social-icon-link:hover {
-    color: var(--color-accent);
+.contact-section .social-links a:hover,
+.contact-section .social-icon-link:hover {
+    color: var(--color-accent-olive);
     transform: translateY(-2px);
 }
 
@@ -1210,35 +1249,39 @@ img {
         height: 40px;
     }
 
+
     .hero-photo-wrap {
         width: 100%;
         height: 100%;
-        background-position: 30% top;
+        background-image: url('assets/michalis-photo-mobile.png') !important;
+        background-position: center center;
     }
 
     .hero-inner {
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-end;
+        align-items: flex-start;
         min-height: 90vh;
         padding-top: 6rem;
-        padding-bottom: 3rem;
-        text-align: center;
+        padding-bottom: 1rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        text-align: left;
     }
 
     .hero-content {
-        text-align: center;
+        text-align: left;
         max-width: none;
         margin-left: 0;
         margin-right: 0;
     }
 
     .hero-logo-wrap {
-        display: flex;
-        justify-content: center;
+        width: fit-content;
     }
 
     .hero-logo {
-        margin: 0 auto;
+        margin: 0;
     }
 
     .nav-toggle {
@@ -1283,10 +1326,8 @@ img {
         flex-direction: column;
     }
 
-    .action-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
+    .actions-list {
+        grid-template-columns: 1fr;
     }
 }
 
