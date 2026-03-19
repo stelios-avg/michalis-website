@@ -1332,9 +1332,6 @@ img {
 }
 
 @media (max-width: 480px) {
-    .hero-label {
-        color: #115e59;
-    }
     .hero-title {
         font-size: 2.5rem;
     }
