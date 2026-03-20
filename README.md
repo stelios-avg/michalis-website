@@ -32,7 +32,9 @@ npx serve .
 
 ## Βίντεο ενημέρωσης (μεγάλο αρχείο)
 
-Το `assets/enimerosi-paraskevas-1.mp4` **δεν ανεβαίνει στο GitHub** (όριο ~100MB ανά αρχείο). Για live site: αντιγράψτε το χειροκίνητα στον server / Netlify / κ.λπ., ή αντικαταστήστε το `src` του `<video>` με URL από YouTube/Vimeo/Cloudinary.
+Το `assets/enimerosi-paraskevas-1.mp4` **δεν ανεβαίνει στο GitHub** (όριο ~100MB ανά αρχείο). **Στο live site το πρώτο βίντεο δεν θα παίζει** αν δεν ανεβάσετε χειροκίνητα αυτό το αρχείο στο hosting, στον ίδιο δρόμο: `assets/enimerosi-paraskevas-1.mp4` (δίπλα στα υπόλοιπα assets).
+
+Εναλλακτικά: συμπίεση του mp4 κάτω από ~95MB και commit χωρίς gitignore, ή αντικατάσταση του `src` στο `<video>` με URL από YouTube/Vimeo/Cloudinary.
 
 ## Προσαρμογή
 

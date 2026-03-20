@@ -28,6 +28,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Τοπικό βίντεο ενημέρωσης: αν λείπει το αρχείο στο server (π.χ. δεν ανέβηκε από το Git), εμφάνιση μηνύματος
+    document.querySelectorAll('#enimerosi video[src]').forEach((video) => {
+        const showMissing = () => {
+            const wrap = video.closest('.video-wrapper');
+            if (!wrap || wrap.querySelector('.video-load-error')) return;
+            const p = document.createElement('p');
+            p.className = 'video-load-error';
+            p.setAttribute('role', 'alert');
+            p.textContent =
+                'Δεν ήταν δυνατή η φόρτωση του βίντεο. Συχνά λείπει το αρχείο στον server — ανεβάστε το assets/enimerosi-paraskevas-1.mp4 στο hosting (ίδιο φάκελος με τα υπόλοιπα assets).';
+            wrap.appendChild(p);
+        };
+        video.addEventListener('error', showMissing);
+    });
+
     // Mobile navigation toggle
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
