@@ -27,6 +27,8 @@
 
 html {
     scroll-behavior: smooth;
+    /* Ύψος header (~80px) ώστε τα #anchors να μην κρύβονται κάτω από το μενού */
+    scroll-padding-top: 5.5rem;
 }
 
 body {
@@ -163,7 +165,7 @@ img {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    animation: heroPhotoEntrance 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+    animation: heroPhotoEntrance 1.35s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
     opacity: 0;
     transform: translateY(25px);
 }
@@ -198,7 +200,7 @@ img {
 
 /* Hero content entrance */
 .hero-content-animate {
-    animation: heroContentEntrance 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+    animation: heroContentEntrance 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
     opacity: 0;
     transform: translateY(30px);
 }
@@ -210,10 +212,42 @@ img {
     }
 }
 
-/* animate-on-scroll: no scroll animation, elements visible by default */
+/* Fade-in όταν το στοιχείο μπαίνει στο viewport (ενεργοποιείται με .is-in-view από script) */
 .animate-on-scroll {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+    transition:
+        opacity 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+.animate-on-scroll.is-in-view {
     opacity: 1;
-    transform: none;
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
+}
+
+/* Κάρτες θέσεων: ελαφρύ stagger με το υπάρχον --i */
+.proposal-card.animate-on-scroll {
+    transition-delay: calc(var(--i, 0) * 0.12s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .animate-on-scroll {
+        opacity: 1;
+        transform: none;
+        transition: none;
+        will-change: auto;
+    }
+
+    .animate-on-scroll.is-in-view {
+        transform: none;
+    }
 }
 
 .hero-content {
@@ -891,6 +925,13 @@ img {
     min-width: 0;
 }
 
+/* Κεντράρισμα περιεχομένου όταν ένα slide (π.χ. οριζόντιο mp4) είναι πιο χαμηλό από τα TikTok */
+.video-carousel .carousel-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .video-wrapper {
     position: relative;
     width: min(100%, 420px);
@@ -908,6 +949,26 @@ img {
     width: 100%;
     height: 100%;
     border: none;
+}
+
+/* Τοπικό βίντεο: όχι σταθερό 9:16 — ακολουθεί την αναλογία του αρχείου (αποφεύγει «zoom» μέσα στο ψηλό κουτί) */
+.video-wrapper.video-wrapper--native {
+    aspect-ratio: auto;
+    width: min(100%, 420px);
+    height: auto;
+    overflow: visible;
+}
+
+.video-wrapper--native video {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: min(85vh, 900px);
+    object-fit: contain;
+    object-position: center;
+    background: #000;
+    border-radius: 12px;
 }
 
 .video-placeholder {

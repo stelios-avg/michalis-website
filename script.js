@@ -3,6 +3,31 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Fade-in on scroll (.animate-on-scroll → .is-in-view)
+    const animated = document.querySelectorAll('.animate-on-scroll');
+    if (animated.length) {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduceMotion) {
+            animated.forEach((el) => el.classList.add('is-in-view'));
+        } else {
+            const revealObserver = new IntersectionObserver(
+                (entries, obs) => {
+                    entries.forEach((entry) => {
+                        if (!entry.isIntersecting) return;
+                        entry.target.classList.add('is-in-view');
+                        obs.unobserve(entry.target);
+                    });
+                },
+                {
+                    root: null,
+                    rootMargin: '0px 0px -6% 0px',
+                    threshold: [0, 0.1, 0.2]
+                }
+            );
+            animated.forEach((el) => revealObserver.observe(el));
+        }
+    }
+
     // Mobile navigation toggle
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
@@ -184,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function goToSlide(index) {
             if (isActions) return;
+            carousel.querySelectorAll('video').forEach((v) => v.pause());
             currentIndex = Math.max(0, Math.min(index, totalSlides - 1));
             track.style.transform = `translateX(-${currentIndex * 100}%)`;
             updateDots();
@@ -230,4 +256,60 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'ArrowRight') goNext();
         });
     });
+
+    // Τίτλος καρτέλας ανά ενότητα στο index.html (#arxiki, #theseis, …)
+    const titleBase = 'Μιχάλης Παρασκευάς – Υποψήφιος Βουλευτής Λεμεσού με το ALMA';
+    const sectionTitleById = {
+        arxiki: 'Αρχική',
+        theseis: 'Θέσεις',
+        draseis: 'Δράσεις',
+        biografiko: 'Βιογραφικό',
+        enimerosi: 'Ενημέρωση'
+    };
+    const sectionIds = Object.keys(sectionTitleById);
+
+    function setDocumentTitleForSection(sectionId) {
+        const label = sectionTitleById[sectionId];
+        if (!label) return;
+        document.title = `${label} | ${titleBase}`;
+    }
+
+    function getCurrentSectionIdFromScroll() {
+        const header = document.querySelector('.header');
+        const offset = header ? header.offsetHeight + 24 : 96;
+        const y = window.scrollY + offset;
+        let current = 'arxiki';
+        for (const id of sectionIds) {
+            const el = document.getElementById(id);
+            if (!el) continue;
+            if (el.offsetTop <= y) current = id;
+        }
+        return current;
+    }
+
+    function updateIndexPageTitle() {
+        if (!document.getElementById('arxiki')) return;
+        setDocumentTitleForSection(getCurrentSectionIdFromScroll());
+    }
+
+    if (document.getElementById('arxiki')) {
+        let titleTicking = false;
+        const onScrollOrResizeForTitle = () => {
+            if (titleTicking) return;
+            titleTicking = true;
+            requestAnimationFrame(() => {
+                titleTicking = false;
+                updateIndexPageTitle();
+            });
+        };
+
+        window.addEventListener('scroll', onScrollOrResizeForTitle, { passive: true });
+        window.addEventListener('resize', onScrollOrResizeForTitle, { passive: true });
+        window.addEventListener('hashchange', onScrollOrResizeForTitle);
+        window.addEventListener('load', updateIndexPageTitle);
+        updateIndexPageTitle();
+        requestAnimationFrame(() => {
+            requestAnimationFrame(updateIndexPageTitle);
+        });
+    }
 });

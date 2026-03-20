@@ -19,3 +19,6 @@ Thumbs.db
 
 # Cursor
 .cursor/
+
+# Μεγάλα αρχεία βίντεο (>100MB όριο GitHub) — ανέβασμα χειροκίνητα στο hosting ή Git LFS
+assets/enimerosi-paraskevas-1.mp4
