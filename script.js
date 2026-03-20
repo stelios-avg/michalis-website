@@ -28,42 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Τοπικό βίντεο ενημέρωσης: αν αποτύχει η φόρτωση, εμφάνιση μηνύματος + πλήρης URL για έλεγχο
-    document.querySelectorAll('#enimerosi video').forEach((video) => {
-        const showMissing = () => {
-            const wrap = video.closest('.video-wrapper');
-            if (!wrap || wrap.querySelector('.video-load-error')) return;
-            const srcEl = video.querySelector('source');
-            const raw = srcEl ? srcEl.getAttribute('src') : video.getAttribute('src');
-            const fullUrl = raw ? new URL(raw, window.location.href).href : '';
-            const p = document.createElement('p');
-            p.className = 'video-load-error';
-            p.setAttribute('role', 'alert');
-            p.appendChild(
-                document.createTextNode(
-                    'Δεν ήταν δυνατή η φόρτωση του βίντεο. Ελέγξτε: ίδιο όνομα αρχείου (enimerosi-paraskevas-1.mp4), φάκελος assets/ δίπλα στο index, και MIME video/mp4 (ανέβασμα .htaccess από το repo). '
-                )
-            );
-            if (fullUrl) {
-                p.appendChild(document.createElement('br'));
-                const small = document.createElement('small');
-                small.appendChild(document.createTextNode('Άνοιγμα URL βίντεο: '));
-                const a = document.createElement('a');
-                a.href = fullUrl;
-                a.target = '_blank';
-                a.rel = 'noopener noreferrer';
-                a.textContent = fullUrl;
-                small.appendChild(a);
-                small.appendChild(
-                    document.createTextNode(' — αν κατεβαίνει ή παίζει, το αρχείο υπάρχει.')
-                );
-                p.appendChild(small);
-            }
-            wrap.appendChild(p);
-        };
-        video.addEventListener('error', showMissing);
-    });
-
     // Mobile navigation toggle
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');

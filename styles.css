@@ -925,7 +925,6 @@ img {
     min-width: 0;
 }
 
-/* Κεντράρισμα περιεχομένου όταν ένα slide (π.χ. οριζόντιο mp4) είναι πιο χαμηλό από τα TikTok */
 .video-carousel .carousel-slide {
     display: flex;
     align-items: center;
@@ -949,37 +948,6 @@ img {
     width: 100%;
     height: 100%;
     border: none;
-}
-
-/* Τοπικό βίντεο: όχι σταθερό 9:16 — ακολουθεί την αναλογία του αρχείου (αποφεύγει «zoom» μέσα στο ψηλό κουτί) */
-.video-wrapper.video-wrapper--native {
-    aspect-ratio: auto;
-    width: min(100%, 420px);
-    height: auto;
-    overflow: visible;
-}
-
-.video-wrapper--native video {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: min(85vh, 900px);
-    object-fit: contain;
-    object-position: center;
-    background: #000;
-    border-radius: 12px;
-}
-
-.video-load-error {
-    margin-top: 0.75rem;
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
-    line-height: 1.45;
-    color: var(--color-text-muted);
-    background: rgba(15, 76, 129, 0.06);
-    border-radius: 8px;
-    border: 1px solid rgba(15, 76, 129, 0.12);
 }
 
 .video-placeholder {
