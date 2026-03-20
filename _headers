@@ -1,0 +1,4 @@
+# Netlify / ορισμένες πλατφόρμες στατικών αρχείων
+/assets/*.mp4
+  Content-Type: video/mp4
+  Accept-Ranges: bytes

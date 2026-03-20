@@ -28,16 +28,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Τοπικό βίντεο ενημέρωσης: αν λείπει το αρχείο στο server (π.χ. δεν ανέβηκε από το Git), εμφάνιση μηνύματος
-    document.querySelectorAll('#enimerosi video[src]').forEach((video) => {
+    // Τοπικό βίντεο ενημέρωσης: αν αποτύχει η φόρτωση, εμφάνιση μηνύματος + πλήρης URL για έλεγχο
+    document.querySelectorAll('#enimerosi video').forEach((video) => {
         const showMissing = () => {
             const wrap = video.closest('.video-wrapper');
             if (!wrap || wrap.querySelector('.video-load-error')) return;
+            const srcEl = video.querySelector('source');
+            const raw = srcEl ? srcEl.getAttribute('src') : video.getAttribute('src');
+            const fullUrl = raw ? new URL(raw, window.location.href).href : '';
             const p = document.createElement('p');
             p.className = 'video-load-error';
             p.setAttribute('role', 'alert');
-            p.textContent =
-                'Δεν ήταν δυνατή η φόρτωση του βίντεο. Συχνά λείπει το αρχείο στον server — ανεβάστε το assets/enimerosi-paraskevas-1.mp4 στο hosting (ίδιο φάκελος με τα υπόλοιπα assets).';
+            p.appendChild(
+                document.createTextNode(
+                    'Δεν ήταν δυνατή η φόρτωση του βίντεο. Ελέγξτε: ίδιο όνομα αρχείου (enimerosi-paraskevas-1.mp4), φάκελος assets/ δίπλα στο index, και MIME video/mp4 (ανέβασμα .htaccess από το repo). '
+                )
+            );
+            if (fullUrl) {
+                p.appendChild(document.createElement('br'));
+                const small = document.createElement('small');
+                small.appendChild(document.createTextNode('Άνοιγμα URL βίντεο: '));
+                const a = document.createElement('a');
+                a.href = fullUrl;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                a.textContent = fullUrl;
+                small.appendChild(a);
+                small.appendChild(
+                    document.createTextNode(' — αν κατεβαίνει ή παίζει, το αρχείο υπάρχει.')
+                );
+                p.appendChild(small);
+            }
             wrap.appendChild(p);
         };
         video.addEventListener('error', showMissing);

@@ -1,0 +1,12 @@
+# MIME για βίντεο (πολλά shared hosting σερβίρουν λάθος τύπο χωρίς αυτό)
+<IfModule mod_mime.c>
+    AddType video/mp4 .mp4
+    AddType video/webm .webm
+</IfModule>
+
+# Βοηθάει streaming μεγάλων mp4 (όπου υποστηρίζεται)
+<IfModule mod_headers.c>
+    <FilesMatch "\.(mp4|webm)$">
+        Header set Accept-Ranges bytes
+    </FilesMatch>
+</IfModule>
