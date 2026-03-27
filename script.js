@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Τίτλος καρτέλας ανά ενότητα στο index.html (#arxiki, #theseis, …)
+    // Τίτλος καρτέλας ανά ενότητα στην αρχική (#arxiki, #theseis, …)
     const titleBase = 'Μιχάλης Παρασκευάς – Υποψήφιος Βουλευτής Λεμεσού με το ALMA';
     const sectionTitleById = {
         arxiki: 'Αρχική',

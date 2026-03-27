@@ -7,5 +7,11 @@
         { "key": "Accept-Ranges", "value": "bytes" }
       ]
     }
+  ],
+  "redirects": [
+    { "source": "/biografiko.html", "destination": "/biografiko/", "permanent": true },
+    { "source": "/epikoinonia.html", "destination": "/epikoinonia/", "permanent": true },
+    { "source": "/oroi-xrisis.html", "destination": "/oroi-xrisis/", "permanent": true },
+    { "source": "/politiki-aporittou.html", "destination": "/politiki-aporittou/", "permanent": true }
   ]
 }

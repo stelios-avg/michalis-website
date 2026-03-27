@@ -10,3 +10,12 @@
         Header set Accept-Ranges bytes
     </FilesMatch>
 </IfModule>
+
+# Καθαρά URLs: παλιά .html → φάκελος/
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^biografiko\.html$ /biografiko/ [R=301,L]
+    RewriteRule ^epikoinonia\.html$ /epikoinonia/ [R=301,L]
+    RewriteRule ^oroi-xrisis\.html$ /oroi-xrisis/ [R=301,L]
+    RewriteRule ^politiki-aporittou\.html$ /politiki-aporittou/ [R=301,L]
+</IfModule>

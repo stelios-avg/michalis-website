@@ -4,9 +4,12 @@
 
 ## Δομή
 
-- **index.html** – Κύριο σελίδα με όλες τις ενότητες
+- **`/`** (`index.html`) – Αρχική με όλες τις ενότητες
+- **`/biografiko/`**, **`/epikoinonia/`**, **`/oroi-xrisis/`**, **`/politiki-aporittou/`** – Ξεχωριστές σελίδες (χωρίς `.html` στο URL)
 - **styles.css** – Στυλ και εμφάνιση
 - **script.js** – Διαδραστικότητα (μενού, smooth scroll)
+
+Οι παλιοί σύνδεσμοι τύπου `/biografiko.html` ανακατευθύνονται (301) προς τις νέες διαδρομές (`vercel.json`, `.htaccess`, `_redirects` για Netlify).
 
 ## Ενότητες
 
