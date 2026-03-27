@@ -163,7 +163,8 @@ img {
     z-index: 0;
     background-image: url('assets/michalis-photo-v2.png');
     background-size: cover;
-    background-position: center center;
+    /* Desktop: άγκυρα προς τα πάνω ώστε να μην κόβεται το κεφάλι με το cover */
+    background-position: center top;
     background-repeat: no-repeat;
     animation: heroPhotoEntrance 1.35s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
     opacity: 0;
